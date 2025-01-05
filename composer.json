@@ -1,0 +1,40 @@
+{
+    "name": "ecli-php/api-generator",
+    "description": "A Package that generates request and responses of all routes",
+    "type": "library",
+    "keywords": [
+        "auto",
+        "api",
+        "generator",
+        "automatic api generation",
+        "laravel"
+    ],
+    "require": {
+        "phpstan/phpdoc-parser": "2.0.x-dev",
+        "laravel/laravel": "11.x.x"
+    },
+    "autoload": {
+        "psr-4": {
+            "EcliPhp\\ApiGenerator\\": "src/"
+        }   ,
+        "classmap": ["src/"]
+    },
+    "authors": [
+        {
+            "name": "arian-arka",
+            "email": "arian.shokri.arka@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "EcliPhp\\ApiGenerator\\ApiGeneratorServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+
+    "minimum-stability": "stable"
+}
