@@ -10,7 +10,7 @@
         "laravel"
     ],
     "require": {
-        "phpstan/phpdoc-parser": "2.0.x-dev",
+        "phpstan/phpdoc-parser": "^2.0",
         "laravel/laravel": "11.x.x"
     },
     "autoload": {
