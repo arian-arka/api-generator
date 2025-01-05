@@ -11,7 +11,7 @@
     ],
     "require": {
         "phpstan/phpdoc-parser": "^2.0",
-        "laravel/laravel": "11.x.x"
+        "laravel/framework": "^11.31"
     },
     "autoload": {
         "psr-4": {
