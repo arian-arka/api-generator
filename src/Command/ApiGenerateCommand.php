@@ -12,7 +12,7 @@ class ApiGenerateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'api-generator:all ';
+    protected $signature = 'api-generator:all {path?} {--show}';
 
     /**
      * The console command description.
@@ -26,8 +26,6 @@ class ApiGenerateCommand extends Command
      */
     public function handle(): void
     {
-        $this->info('fdssdf');
-        return ;
         $data = json_encode((new ExtractRoutes())->all(), JSON_PRETTY_PRINT);
         if($this->hasArgument('path'))
             File::put($this->argument('path'),$data);
