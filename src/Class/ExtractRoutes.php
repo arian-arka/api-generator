@@ -89,8 +89,12 @@ class ExtractRoutes
         Artisan::command('route:cache', fn($any) => null);
     }
 
-    private function parametersFromUri(string $uri)
+    private function parametersFromUri(\ReflectionMethod|null $method,string $uri)
     {
+        $parametersFromMethod = [];
+        foreach ($method?->getParameters() ?? [] as $parameter) {
+            dd($parameter);
+        }
         $parameters = [];
         foreach (explode('/', $uri) as $p) {
             //echo "$p<br>";
@@ -99,9 +103,12 @@ class ExtractRoutes
                 continue;
             if ('{' === $p[0] && $p[$strlen - 1] === '}') {
                 $required = $p[$strlen - 2] !== '?';
-                $parameters[substr($p, 1, $strlen - ($required ? 2 : 3))] = [
+                $key = substr($p, 1, $strlen - ($required ? 2 : 3));
+                $type = 'string';
+
+                $parameters[$key] = [
                     'required' => $required,
-                    'type' => 'string',
+                    'type' => $type,
                     'model' => null,
                 ];
             }
@@ -153,8 +160,8 @@ class ExtractRoutes
     {
         $all = [];
         foreach (Route::getRoutes()->getRoutes() as $route) {
-            $parameters = $this->parametersFromUri($route->uri);
             $reflectedMethod = $this->actionToMethod($route->action['uses']);
+            $parameters = $this->parametersFromUri($reflectedMethod,$route->uri);
             $request = $reflectedMethod ? $this->extractRequestRules($reflectedMethod) : [];
             $response = $reflectedMethod ? $this->extractResponse($reflectedMethod) : [];
             [$requestFromComment, $responseFromComment] = $this->parseComments($reflectedMethod?->getDocComment() ? $reflectedMethod->getDocComment() : '');
